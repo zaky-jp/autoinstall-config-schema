@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/zaky-jp/autoinstall-config-schema/main/schema.autoinstall.json",
+  "$defs": {
+    "autoinstall": {
+      "$ref": "https://raw.githubusercontent.com/canonical/subiquity/main/autoinstall-schema.json",
+      "properties": {
+        "additionalProperties": false
+      }
+    },
+    "user-data": {
+      "$ref": "https://raw.githubusercontent.com/canonical/cloud-init/main/cloudinit/config/schemas/versions.schema.cloud-config.json"
+    },
+    "rootSchema": {
+      "type": "object",
+      "properties": {
+        "autoinstall": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/autoinstall"
+            },
+            {
+              "user-data": {
+                "$ref": "#/$defs/user-data"
+              }
+            }
+          ]
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "allOf": [
+        {
+          "$ref": "#/$defs/rootSchema"
+        }
+      ]
+    }
+  ]
+}
